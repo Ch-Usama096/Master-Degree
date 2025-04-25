@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Classification</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #666;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload Image to Classify as Good (0) or Bad (1)</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="image" id="image-input" required>
+        <button type="submit">Predict</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        const resultText = document.getElementById('result');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            const image = document.getElementById('image-input').files[0];
+            formData.append("image", image);
+
+            const res = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            resultText.textContent = "Prediction: " + (data.prediction === 0 ? "Good (0)" : "Bad (1)");
+        };
+    </script>
+</body>
+</html>
