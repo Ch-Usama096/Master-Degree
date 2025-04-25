@@ -38,7 +38,6 @@ def predict():
 
     prediction = model.predict(img_array)
     result = int(np.round(prediction[0][0]))  # assuming binary output
-    print(result)
     return jsonify({'prediction': result})
 
 

@@ -50,7 +50,7 @@
     </style>
 </head>
 <body>
-    <h2>Upload Image to Classify as Good (0) or Bad (1)</h2>
+    <h2>Upload Image to Classify as MonkeyPox Disease or Not</h2>
     <form id="upload-form" enctype="multipart/form-data">
         <input type="file" name="image" id="image-input" required>
         <button type="submit">Predict</button>
@@ -72,7 +72,7 @@
                 body: formData
             });
             const data = await res.json();
-            resultText.textContent = "Prediction: " + (data.prediction === 0 ? "Good (0)" : "Bad (1)");
+            resultText.textContent = "Prediction: " + (data.prediction === 0 ? "Not MonkeyPx Disease Detected" : "MonkeyPox Disease Detected");
         };
     </script>
 </body>
